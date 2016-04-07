@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Huluwa Project</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static "custom.css" %}" type="text/css">
+  <link rel="stylesheet" href="{% static "select2-bootstrap.css" %}" type="text/css">
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+	    {{ message }}
+            <button type="button" class="close" aria-label="Close" id="close_btn"><span aria-hidden="true">&times;</span></button>
+        </div>
+      {% endfor %}
+  {% block content %}{% endblock %}
+  </div>
+		{% block footer %}{% endblock %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+  {% block js %}{% endblock %}
+</body>
+</html>

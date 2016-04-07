@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <form action="" method="post" class="form-horizontal">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div class="form-group">
+    {{ form.server.errors }}
+    <div class="col-sm-8 col-sm-offset-2">
+      {{ form.server }}
+    </div>
+  </div>
+  <div class="form-group">
+    {{ form.os.errors }}
+    <div class="col-sm-8 col-sm-offset-2">
+      {{ form.os }}
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-2">
+      <button type="submit" class="btn btn-default">Install OS to the Server</button>
+    </div>
+  </div>
+  </form>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+
+function formatRepo (repo) {
+    if (repo.loading) return repo.text;
+
+    var markup = "<div class='select2-result-repository clearfix'>" +
+      "<div class='select2-result-repository__meta'>" +
+        "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+
+    return markup;
+  }
+
+    function formatRepoSelection (repo) {
+      return repo.full_name || repo.text;
+    }
+$( document ).ready(function() {
+$("#id_server").select2({
+  placeholder: "Select a Server here",
+  ajax: {
+    url: "http://10.35.82.43:8000/smartpxe/client-list",
+    dataType: 'json',
+    delay: 250,
+    data: function (params) {
+      return {
+        q: params.term, // search term
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+      params.page = params.page || 1;
+      return {
+        results: data.items,
+        pagination: {
+          more: (params.page * 30) < data.total_count
+        }
+      };
+    },
+    cache: true
+  },
+  escapeMarkup: function (markup) { return markup; }, 
+  minimumInputLength: 1,
+  templateResult: formatRepo,
+  templateSelection: formatRepoSelection
+});
+$("#id_os").select2({
+  placeholder: "Select an OS here",
+  ajax: {
+    url: "http://10.35.82.43:8000/smartpxe/os-list",
+    dataType: 'json',
+    delay: 250,
+    data: function (params) {
+      return {
+        q: params.term, // search term
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+      params.page = params.page || 1;
+      return {
+        results: data.items,
+        pagination: {
+          more: (params.page * 30) < data.total_count
+        }
+      };
+    },
+    cache: true
+  },
+  escapeMarkup: function (markup) { return markup; }, 
+  minimumInputLength: 1,
+  templateResult: formatRepo,
+  templateSelection: formatRepoSelection
+});
+
+});
+</script>
+{% endblock %}
