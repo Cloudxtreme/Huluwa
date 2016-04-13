@@ -44,7 +44,7 @@ $( document ).ready(function() {
 $("#id_server").select2({
   placeholder: "Select a Server here",
   ajax: {
-    url: "http://10.35.82.43:8000/smartpxe/client-list",
+    url: "{% url 'client_list' %}",
     dataType: 'json',
     delay: 250,
     data: function (params) {
@@ -72,7 +72,7 @@ $("#id_server").select2({
 $("#id_os").select2({
   placeholder: "Select an OS here",
   ajax: {
-    url: "http://10.35.82.43:8000/smartpxe/os-list",
+    url: "{% url 'os_list' %}",
     dataType: 'json',
     delay: 250,
     data: function (params) {
