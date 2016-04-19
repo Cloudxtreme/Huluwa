@@ -40,7 +40,8 @@ menu title ########## Huluwa PXE Boot Menu ##########
 """
 
 PXEOSEntryTemplate = """
-label {{ display_name }}
+label 1
+menu label ^1) {{ display_name }}
 menu default
 kernel {{ os_name }}/vmlinuz
 append initrd={{ os_name }}/initrd.img method=http://{{ tftp_ip }}/{{ os_name }} ks=http://{{ tftp_ip }}/kickstart/ks_{{ os_name }}.cfg devfs=nomount
