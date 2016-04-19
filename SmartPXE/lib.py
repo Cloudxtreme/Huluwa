@@ -1,3 +1,4 @@
+import subprocess
 from SmartPXE.config_templates import *
 from jinja2 import Template
 
@@ -33,14 +34,20 @@ def _overwrite(path, content):
     try:
         with open(path, 'w') as f:
             f.write(content)
-    except Exception:
+    except:
         return False
     return True
 
 
 def update_dhcp_conf(content):
-    _overwrite(DHCPServerConfigPath, content)
+    return _overwrite(DHCPServerConfigPath, content)
 
 
 def update_pxe_conf(content):
-    _overwrite(PXEConfigPath, content)
+    return _overwrite(PXEConfigPath, content)
+
+
+def restart_dhcpd():
+    if subprocess.call(["systemctl", "restart", "dhcpd"]) == 0:
+        return True
+    return False
