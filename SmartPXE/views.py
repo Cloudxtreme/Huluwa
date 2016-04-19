@@ -16,7 +16,6 @@ class XView(View):
 
     def post(self, request, *args, **kwargs):
         form = XForm(request.POST)
-        import ipdb; ipdb.set_trace()
         if form.is_valid():
             # generate PXE and DHCP config
             # then restart DHCP service
